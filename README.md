@@ -2,8 +2,6 @@
 Tools to install kexts in macOS 11, 12, 13
 - Works for real Mac and Hackintosh
 - Kexts is installed in /Library/Extensions
-
-# Kext-Droplet
 - Support from macOS Big Sur 11 to macOS Ventura 13
 - Gatekeeper then SIP Security must be disabled
 
