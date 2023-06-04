@@ -9,6 +9,8 @@ Tools to install kexts in macOS 11, 12, 13
 
 Usage ➦ [Read This First](https://github.com/chris1111/Kext-Droplet-macOS/blob/Master/Usage.md)
 
+Usage Video ➦ [Usage Video](https://github.com/chris1111/Kext-Droplet-macOS/blob/Master/Video.md)
+
 ![Screenshot Intro](https://github.com/chris1111/Kext-Droplet-macOS/blob/Master/Pics/Screenshot%20Intro.png)
 
 #### Download Release ➤ [Kext-Droplet-macOS](https://github.com/chris1111/Kext-Droplet-macOS/releases/tag/V1)
