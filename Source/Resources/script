@@ -101,11 +101,6 @@ osascript -e 'do shell script "chown -R root:wheel /Private/tmp/Install/*.kext" 
 osascript -e 'do shell script "chmod -R 755 /Private/tmp/Install/*.kext" with administrator privileges'
 
 
-
-
-
-
-
 echo "Verifying SIP"
 Sleep 2
 function vertifySIP {
