@@ -1,0 +1,154 @@
+#!/bin/sh
+# Kext-Droplet-macOS
+# Copyright (c) 2019 2023, chris1111. All Right Reserved
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# Vars
+LEDir="/Library/Extensions"
+TempDir="/Private/tmp/Install"
+BULEDir="$HOME/Desktop/BackupKext_LE"
+apptitle="Kext-Droplet-macOS"
+version="1.0"
+# Set Icon directory and file 
+export ICNS=$(dirname "${0}")
+iconfile="$ICNS/AppIcon.icns"
+echo " "
+
+echo "
+******************************************************
+Kext-Droplet-macOS
+******************************************************"
+# Set Droping directory and file
+for files in "$@" ;do
+
+if [ "/Private/tmp/Install" ]; then
+	rm -rf "/Private/tmp/Install"
+fi
+
+mkdir -p "${TempDir}"
+Sleep 1
+
+cp -R "$@" "${TempDir}"
+
+echo "Prepare Installation for:"
+for file in "${TempDir}"/*;
+do
+echo "${file##*/}"
+done
+
+osascript <<EOD
+  tell application "Kext-Droplet-macOS"
+      activate
+  end tell
+EOD
+
+
+Sleep 2
+# Select Choice
+response=$(osascript -e 'tell app "System Events" to display dialog "
+Kext-Droplet-macOS is a utility that allows you to install your kexts in all security in Library Extensions.
+SIP Security must be disabled to using this program!
+
+Only Kext file are allow.
+NOTE: The files are overwritten if they exist, a backup of the original files is performed.
+
+Choose LE to install the kexts!
+L/E ➣ /Library/Extensions/" buttons {"Cancel","LE"} default button 2 with title "'"$apptitle"' '"$version"'" with icon POSIX file "'"$iconfile"'"  ')
+
+action=$(echo $response | cut -d ':' -f2)
+
+# Exit if Canceled
+if [ ! "$action" ] ; then
+  echo "User cancelled Program closing "
+  rm -rf "/Private/tmp/Install"
+  osascript -e 'display notification "Program closing" with title "'"$apptitle"'" subtitle "User cancelled"'
+  Sleep 2
+  killall "Kext-Droplet-macOS"
+  Sleep 1
+  echo "QUITAPP"
+fi
+
+osascript <<EOD
+  tell application "Kext-Droplet-macOS"
+      activate
+  end tell
+EOD
+
+  #  Library Extensions is user select LE
+  if [ "$action" == "LE" ] ; then
+sleep 2
+echo "Verifying Kexts for /Library/Extensions/:"
+if [ -e "${3}/Library/Extensions/${file##*/}"  ]; then
+echo "Find ${file##*/} ➣ Save Kext for (LE)"
+mkdir -p ~/Desktop/BackupKext_LE
+for file in "${TempDir}"/*; 
+do
+Sleep 3
+rsync -ab "${TempDir}"/${file##*/} "$BULEDir";
+mv "$BULEDir" "${BULEDir}"`date "+%Y%m%d_%H%M%S"`
+done
+fi
+
+osascript -e 'do shell script "chown -R root:wheel /Private/tmp/Install/*.kext" with administrator privileges'
+osascript -e 'do shell script "chmod -R 755 /Private/tmp/Install/*.kext" with administrator privileges'
+
+
+
+
+
+
+
+echo "Verifying SIP"
+Sleep 2
+function vertifySIP {
+	echo -n "Verifying SIP..."
+	if [[ "$(csrutil status | grep "System Integrity Protection status: disabled." | wc -l)" == "       0" && "$(csrutil status | grep "Filesystem Protections: disabled" | wc -l)" == "       0" ]]; then
+		echo ""
+osascript -e 'tell app "System Events" to display dialog "SIP is enabled on this system. 
+Please disable the SIP from Bootloader or boot into Recovery HD or an Installer USB drive, open a new Terminal Window, and enter csrutil disable. When completed, reboot back into your standard macOS install, and run this Program again." with icon file "System:Library:CoreServices:CoreTypes.bundle:Contents:Resources:FileVaultIcon.icns" buttons {"OK"} default button 1 with title "Kext-Droplet-macOS (Error SIP Enable)"'
+
+osascript -e 'display notification "Program closing" sound name "default" with title "'"$apptitle"'" subtitle "SIP is Enable"'
+echo "QUITAPP"
+exit 0
+		return 1
+	fi
+	return 0		
+		
+}
+
+vertifySIP
+osascript -e 'do shell script "cp -r /Private/tmp/Install/*.kext /Library/Extensions/" with administrator privileges' 
+echo "Kext Cache repair! Please wait. ."
+Sleep 1
+osascript -e 'do shell script "sudo touch /Library/Extensions/" with administrator privileges'
+fi
+
+Sleep 2
+osascript -e 'do shell script "rm -rf /Private/tmp/Install" with administrator privileges'
+echo "Verification System version"
+
+echo " "
+
+osascript -e 'tell app "System Events" to display dialog "You have to allow software update then restart your machine!" with icon POSIX file "'"$iconfile"'" buttons {"DONE"} default button 1 with title "Restart the machine"'
+
+Sleep 1
+# script Notifications
+osascript -e 'display notification "Reboot" with title "You have to allow software Update"  sound name "default"'
+
+osascript <<EOD
+  tell application "Kext-Droplet-macOS"
+      activate
+  end tell
+EOD
+
+exit 0
+  
+done
