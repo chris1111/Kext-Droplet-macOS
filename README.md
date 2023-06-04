@@ -11,6 +11,6 @@ Usage ➦ [Read This First](https://github.com/chris1111/Kext-Droplet-macOS/blob
 
 ![Screenshot Intro](https://github.com/chris1111/Kext-Droplet-macOS/blob/Master/Pics/Screenshot%20Intro.png)
 
-#### Download Release ➤ [Kext-Droplet-macOS]()
+#### Download Release ➤ [Kext-Droplet-macOS](https://github.com/chris1111/Kext-Droplet-macOS/releases/tag/V1)
 
 ##### NOTE: this program is not responsible for any damage or machine that does not boot anymore.
