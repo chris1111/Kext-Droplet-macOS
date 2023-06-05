@@ -11,6 +11,8 @@ Move Kext-Droplet-macOS on your Desktop
 
 ![Screenshot 2](https://github.com/chris1111/Kext-Droplet-macOS/blob/Master/Pics/Screenshot%202.png)
 
+![Screenshot 3](https://github.com/chris1111/Kext-Droplet-macOS/blob/Master/Pics/Screenshot%203.png)
+
 Warning: SIP Enable ⬇︎
 
 ![Sip Enable](https://github.com/chris1111/Kext-Droplet-macOS/blob/Master/Pics/Screenshot%20SIP.png)
