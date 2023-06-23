@@ -1,5 +1,5 @@
 # Kext-Droplet-macOS
-A Tool to install kexts in macOS versions 11, 12 and 13
+A Tool to install kexts in macOS versions 11, 12, 13 and 14
 - Works for real Macs and Hackintosh devices
 - Kexts get installed in /Library/Extensions
 - Support from macOS Big Sur 11 to macOS Ventura 13
