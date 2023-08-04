@@ -144,6 +144,7 @@ osascript <<EOD
   end tell
 EOD
 
-exit 0
-  
+Sleep 2
+echo "QUITAPP"  
+
 done
