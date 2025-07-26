@@ -1,8 +1,8 @@
 # Kext-Droplet-macOS
-A Tool to install kexts in macOS versions 11, 12, 13, 14 and 15
+A Tool to install kexts in macOS versions 11, 12, 13, 14, 16 and 26
 - Works for real Macs and Hackintosh devices
 - Kexts get installed in /Library/Extensions
-- Support from macOS Big Sur 11 to macOS Sequoia 15
+- Support from macOS Big Sur 11 to macOS Tahoe 26
 - Gatekeeper and SIP Security must be disabled
 
 Usage ➦ [Readme](https://github.com/chris1111/Kext-Droplet-macOS/blob/Master/Usage.md) | [Video](https://github.com/chris1111/Kext-Droplet-macOS/blob/Master/Video.md)
